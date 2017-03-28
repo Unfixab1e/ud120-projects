@@ -20,3 +20,29 @@ import pickle
 enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "r"))
 
 
+
+print enron_data["PRENTICE JAMES"]["total_stock_value"]
+
+print enron_data["COLWELL WESLEY"]["from_this_person_to_poi"]
+
+
+print enron_data["SKILLING JEFFREY K"]["exercised_stock_options"]
+
+
+
+print enron_data["SKILLING JEFFREY K"]["total_payments"]
+print enron_data["FASTOW ANDREW S"]["total_payments"]
+print enron_data["LAY KENNETH L"]["total_payments"]
+
+
+email_count = 0
+for k in enron_data:
+    if enron_data[k]['email_address'] != 'NaN':
+        email_count += 1
+print email_count
+
+salary_count = 0
+for person in enron_data:
+    if enron_data[person]['salary'] != 'NaN':
+        salary_count += 1
+print salary_count
