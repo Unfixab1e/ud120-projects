@@ -30,7 +30,7 @@ for p, o in enron_data.iteritems():
 print x
 
 
-
+print enron_data["PRENTICE JAMES"]
 print enron_data["PRENTICE JAMES"]["total_stock_value"]
 
 print enron_data["COLWELL WESLEY"]["from_this_person_to_poi"]
@@ -56,3 +56,41 @@ for person in enron_data:
     if enron_data[person]['salary'] != 'NaN':
         salary_count += 1
 print salary_count
+
+
+total_payments_count = 0
+total_payments_nan=0
+for person in enron_data:
+    if enron_data[person]['total_payments'] == 'NaN':
+        total_payments_nan += 1
+    total_payments_count += 1
+
+print total_payments_count
+print total_payments_nan
+print float(total_payments_nan) / float(total_payments_count)
+
+
+
+
+total_payments_poi = 0
+total_payments_poi_nan=0
+total_poi = 0
+for person in enron_data:
+    if enron_data[person]['poi'] == True:
+        total_poi+=1
+        if enron_data[person]['total_payments'] == 'NaN':
+            total_payments_poi_nan += 1
+        total_payments_poi += 1
+        
+total_payments_poi+=10    
+total_payments_poi_nan+=10    
+print total_poi
+
+print total_payments_poi
+print float(total_payments_poi_nan) / float(total_payments_poi)       
+
+
+
+
+
+        
