@@ -47,9 +47,9 @@ plt.show()
 
 ### identify and remove the most outlier-y points
 predictions = reg.predict(ages_train)
+print "Predictions:" , predictions
 cleaned_data = []
 try:
-    predictions = reg.predict(ages_train)
     cleaned_data = outlierCleaner( predictions, ages_train, net_worths_train )
     
     #reg.fit(ages_train, net_worths_train)
@@ -64,7 +64,7 @@ except NameError:
 
 
 
-
+print "Length of cleaned data:", len(cleaned_data)
 
 
 ### only run this code if cleaned_data is returning data
@@ -76,6 +76,8 @@ if len(cleaned_data) > 0:
     ### refit your cleaned data!
     try:
         reg.fit(ages, net_worths)
+        print "Coeff: ",reg.coef_
+        print "Score:", reg.score(ages_test, net_worths_test)
         plt.plot(ages, reg.predict(ages), color="blue")
     except NameError:
         print "you don't seem to have regression imported/created,"
