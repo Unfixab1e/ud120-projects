@@ -48,25 +48,62 @@ data_dict.pop("TOTAL", 0)
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
+feature_3 = "total_payments"
+
 poi  = "poi"
-features_list = [poi, feature_1, feature_2]
+features_list = [poi, feature_1, feature_2, feature_3]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
 
+from sklearn import preprocessing
+import numpy as np
+
+min_max_scaler = preprocessing.MinMaxScaler()
+X_train_minmax = min_max_scaler.fit_transform(finance_features)
+X_test = np.array([[ 200000., 1000000., 0.]])
+X_test_minmax = min_max_scaler.transform(X_test)
+print X_test_minmax
 
 ### in the "clustering with 3 features" part of the mini-project,
 ### you'll want to change this line to 
 ### for f1, f2, _ in finance_features:
 ### (as it's currently written, the line below assumes 2 features)
-for f1, f2 in finance_features:
+for f1, f2, f3 in finance_features:
     plt.scatter( f1, f2 )
 plt.show()
 
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
+from sklearn import cluster
+clf = cluster.KMeans(n_clusters = 2)
+clf.fit(finance_features)
+pred = clf.predict(finance_features)
+
+minimum = 9999999
+maximum = 0
+
+for k in data_dict:
+    if data_dict[k]['exercised_stock_options'] > maximum and data_dict[k]['exercised_stock_options']!="NaN":
+        maximum = data_dict[k]['exercised_stock_options']
+    if data_dict[k]['exercised_stock_options'] < minimum:
+        minimum = data_dict[k]['exercised_stock_options']
+            
+print "Maximum Stock: ", maximum
+print "Minimum Stock: ", minimum
 
 
 
+minimum = 9999999
+maximum = 0
+
+for k in data_dict:
+    if data_dict[k]['salary'] > maximum and data_dict[k]['salary']!="NaN":
+        maximum = data_dict[k]['salary']
+    if data_dict[k]['salary'] < minimum:
+        minimum = data_dict[k]['salary']
+            
+print "Maximum salary: ", maximum
+print "Minimum salary: ", minimum
 
 ### rename the "name" parameter when you change the number of features
 ### so that the figure gets saved to a different file
